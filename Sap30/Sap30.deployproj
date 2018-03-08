@@ -40,6 +40,8 @@
     <None Include="DSC\CreateADPDC.zip" />
     <None Include="DSC\PrepareADBDC.ps1" />
     <None Include="DSC\PrepareADBDC.zip" />
+    <Content Include="linuxvm.json" />
+    <Content Include="linuxvm.parameters.json" />
     <None Include="metadata.json" />
     <None Include="nestedtemplates\configureADBDC.json" />
     <None Include="nestedtemplates\nic.json" />

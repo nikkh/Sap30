@@ -6,69 +6,51 @@
 
   "parameters": {
     "environmentName": {
-
-      "value": "aaa"
-
+      "value": ""
     },
     "environmentType": {
-
-      "value": "dev"
-
+      "value": ""
     },
     "VNetName": {
-      "value": "vnet"
+      "value": ""
     },
     "VNetPrefix": {
-      "value": "10.0.0.0/16"
+      "value": ""
     },
     "VNetADSubnetName": {
-      "value": "ad"
+      "value": ""
     },
     "VNetADSubnetPrefix": {
-      "value": "10.0.0.0/24"
+      "value": ""
     },
-    "adPDCNicIPAddress": { "value": "10.0.0.4" },
-    "adBDCNicIPAddress": { "value": "10.0.0.5" },
-
+    "adPDCNicIPAddress": { "value": "" },
+    "adBDCNicIPAddress": { "value": "" },
     "VNetApplicationSubnetName": {
-      "value": "app"
+      "value": ""
     },
     "VNetApplicationSubnetPrefix": {
-      "value": "10.0.1.0/24"
+      "value": ""
     },
     "VNetDatabaseSubnetName": {
-      "value": "db"
+      "value": ""
     },
     "VNetDatabaseSubnetPrefix": {
-      "value": "10.0.2.0/24"
+      "value": ""
     },
     "VNetGatewaySubnetName": {
-      "value": "GatewaySubnet"
+      "value": ""
     },
     "VNetGatewaySubnetPrefix": {
-      "value": "10.0.255.224/27"
-
+      "value": ""
     },
     "adminUsername": {
-
-      "value": "adAdministrator"
-
+      "value": ""
     },
-
     "adminPassword": {
-
-      "value": "it wont actually  be this"
-
+      "value": ""
     },
-
-
-
     "domainName": {
-
-      "value": "ad.local"
-
+      "value": ""
     }
-
   }
-
 }

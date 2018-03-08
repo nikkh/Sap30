@@ -261,3 +261,5 @@ __pycache__/
 *.pyc
 /Sap30/create-domain.nick.parameters.json
 /Sap30/commandline.txt
+/Sap30/create-domain-existing-vnet.json
+/Sap30/create-domain-existing-vnet.parameters.json

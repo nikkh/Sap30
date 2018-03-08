@@ -176,7 +176,7 @@
     "adBDCRDPNAT": "adBDCRDP",
     "dnsPrefix": "[concat(variables('environmentPrefix'),uniqueString(resourceGroup().id),'-pip')]",
 
-    "virtualNetworkName": "[concat(variables('environmentPrefix'),'vnet')]",
+    "virtualNetworkName": "[parameters('VNetName')]",
     "virtualNetworkAddressRange": "[parameters('VNetPrefix')]",
     "adSubnetName": "[parameters('VNetADSubnetName')]",
     "adSubnet": "[parameters('VNetADSubnetPrefix')]",
