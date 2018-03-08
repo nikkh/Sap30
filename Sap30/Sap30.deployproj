@@ -48,6 +48,7 @@
     <None Include="nestedtemplates\vnet-with-dns-server.json" />
     <None Include="nestedtemplates\vnet.json" />
     <None Include="readme.md" />
+    <None Include="test.sh" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>
