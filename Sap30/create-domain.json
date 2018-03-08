@@ -137,7 +137,7 @@
     "bdcRDPPort": {
       "type": "int",
       "metadata": {
-        "description": "The public RDP port for the BDC VM"
+        "description": "The public RDP port for the BDC  VM"
       },
       "defaultValue": 13389
     },
