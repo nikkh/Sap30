@@ -1,0 +1,74 @@
+{
+
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+
+  "contentVersion": "1.0.0.0",
+
+  "parameters": {
+    "environmentName": {
+
+      "value": "aaa"
+
+    },
+    "environmentType": {
+
+      "value": "dev"
+
+    },
+    "VNetName": {
+      "value": "vnet"
+    },
+    "VNetPrefix": {
+      "value": "10.0.0.0/16"
+    },
+    "VNetADSubnetName": {
+      "value": "ad"
+    },
+    "VNetADSubnetPrefix": {
+      "value": "10.0.0.0/24"
+    },
+    "adPDCNicIPAddress": { "value": "10.0.0.4" },
+    "adBDCNicIPAddress": { "value": "10.0.0.5" },
+
+    "VNetApplicationSubnetName": {
+      "value": "app"
+    },
+    "VNetApplicationSubnetPrefix": {
+      "value": "10.0.1.0/24"
+    },
+    "VNetDatabaseSubnetName": {
+      "value": "db"
+    },
+    "VNetDatabaseSubnetPrefix": {
+      "value": "10.0.2.0/24"
+    },
+    "VNetGatewaySubnetName": {
+      "value": "GatewaySubnet"
+    },
+    "VNetGatewaySubnetPrefix": {
+      "value": "10.0.255.224/27"
+
+    },
+    "adminUsername": {
+
+      "value": "adAdministrator"
+
+    },
+
+    "adminPassword": {
+
+      "value": "it wont actually  be this"
+
+    },
+
+
+
+    "domainName": {
+
+      "value": "ad.local"
+
+    }
+
+  }
+
+}
