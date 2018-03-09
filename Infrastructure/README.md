@@ -22,7 +22,7 @@ azurrdeploy.parameters.json - The parameters file
 This template will deploy 2 new VMs (along with a new VNet, Storage Account and Load Balancer) and create a new  AD forest and domain, each VM will be created as a DC for the new domain and will be placed in an availability set. Each VM will also have an RDP endpoint added with a public load balanced IP address.
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnikkh%2FSap30%2Fmaster%2Finfrastructure%2Fazuredeploy.json" target="_blank">
-   Deploy VNet and Domain Controllers
+   Deploy VNet and Gateway Controllers
 </a>
 <br>
 
@@ -30,5 +30,5 @@ This template will deploy 2 new VMs (along with a new VNet, Storage Account and 
 # Links specifically for Nick
 
 <a href="https://portal.azure.com/microsoft.onmicrosoft.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnikkh%2FSap30%2Fmaster%2Finfrastructure%2Fazuredeploy.json" target="_blank">
-   Nick Deploy VNet and Domain Controllers
+   Nick Deploy VNet and Gateway
 </a>
