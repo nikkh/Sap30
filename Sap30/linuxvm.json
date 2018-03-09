@@ -14,6 +14,12 @@
         "description": "Size of the Virtual Machine."
       }
     },
+    "existingVirtualNetworkResourceGroup": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource group containing the virtual network."
+      }
+    },
     "virtualNetworkName": {
       "type": "string",
       "metadata": {
@@ -54,17 +60,21 @@
   "variables": {
     "imagePublisher": "Canonical",
     "imageOffer": "UbuntuServer",
-    
-    "nicName":"[concat(parameters('vmName'),'-nic')]",
-   
+
+    "nicName": "[concat(parameters('vmName'),'-nic')]",
+
     "subnetName": "[parameters('subnetName')]",
-  
+
     "vmName": "[parameters('vmName')]",
     "vmSize": "[parameters('vmSize')]",
     "virtualNetworkName": "[parameters('virtualNetworkName')]",
-    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+    "vnetID": "[resourceId(parameters('existingVirtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "apiVersion": "2015-06-15"
+
+
+
+
   },
   "resources": [
     {
