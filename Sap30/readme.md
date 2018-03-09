@@ -9,7 +9,7 @@ This template will deploy 2 new VMs (along with a new VNet, Storage Account and 
 <a href="https://portal.azure.com/microsoft.onmicrosoft.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnikkh%2FSap30%2Fmaster%2FSap30%2Flinuxvm.json" target="_blank">
    Deploy a Linux Box
 </a>
-## Links specifically for Nick
+# Links specifically for Nick
 <a href="https://portal.azure.com/microsoft.onmicrosoft.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fnikkh%2FSap30%2Fmaster%2FSap30%2Fcreate-domain.json" target="_blank">
    Nick Deploy VNet and Domain Controllers
 </a>
