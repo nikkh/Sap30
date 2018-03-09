@@ -1,0 +1,237 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "VNetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the VNet to create"
+      }
+    },
+    "VNetPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "CIDR block to allocate to vnet"
+      }
+    },
+    "FrontEndSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the subnet1 to create (FrontEnd)"
+      }
+    },
+    "FrontEndSubnetPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "The CIDR Prefix for subnet1 to create"
+      }
+    },
+    "BackEndSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the subnet2 to create (BackEnd)"
+      }
+    },
+    "BackEndSubnetPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "The CIDR Prefix for subnet2 to create"
+      }
+    },
+    "GatewaySubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the subnet3 to create (GateWaySubnet)"
+      }
+    },
+    "GatewaySubnetPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "The CIDR Prefix for the Gateway Subnet to create"
+      }
+    },
+    "VNet1GWName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of of the Virtual network Gateway"
+      }
+    },
+    "VNet1GWIPName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Virtual Network Gateway IP address"
+      }
+    },
+    "VNet1GWpublicIPAddress": {
+      "type": "string",
+      "metadata": {
+        "description": "The Public IP address of the Virtual Network Gateway"
+      }
+    },
+    "VPNClientPoolIPPrefix": {
+      "type": "string",
+      "metadata": {
+        "desctiption": "The CIDR range of addresses that will be assigned to the VPN Clients"
+      }
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "name": "[parameters('VNetName')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [],
+      "tags": {
+        "displayName": "[parameters('VNetName')]"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('VNetPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('FrontEndSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('FrontEndSubnetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('BackEndSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('BackEndSubnetPrefix')]"
+            }
+          },
+          {
+            "name": "[parameters('GatewaySubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('GateWaySubnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "comments": "The Publiic IP Address that will be applid to the Virtual Network Gateway",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('VNet1GWIPName')]",
+      "sku": {
+        "name": "Basic"
+      },
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2017-10-01",
+      "scale": null,
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "ipAddress": "[parameters('VNet1GWpublicIPAddress')]",
+        "publicIPAddressVersion": "IPv4",
+        "idleTimeoutInMinutes": 4
+      },
+      "dependsOn": []
+    },
+    {
+      "comments": "The creation of the Virtual Network Gateway",
+      "type": "Microsoft.Network/virtualNetworkGateways",
+      "name": "[parameters('VNet1GWName')]",
+      "apiVersion": "2017-10-01",
+      "location": "[resourceGroup().location]",
+      "scale": null,
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "default",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('VNet1GWIPName'))]"
+              },
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('GatewaySubnetName'))]"
+              }
+            }
+          }
+        ],
+        "sku": {
+          "name": "Basic",
+          "tier": "Basic",
+          "Capacity": 2
+        },
+        "gatewayType": "Vpn",
+        "vpnType": "RouteBased",
+        "enableBgp": false,
+        "activeActive": false,
+        "vpnClientConfiguration": {
+          "vpnClientAddressPool": {
+            "addressPrefixes": "[parameters('VPNClientPoolIPPrefix')]"
+          },
+          "vpnClientProtocols": [ "SSTP" ],
+          "vpnClientRootCertificates": [
+            {
+              "name": "PS2RootCert",
+              "properties": {
+                "publicCertData": "MIIC5zCCAc+gAwIBAgIQRMrgWxlkZ7hJde05xksCrTANBgkqhkiG9w0BAQsFADAWMRQwEgYDVQQDDAtQMlNSb290Q2VydDAeFw0xODAzMDcxNzQyMDhaFw0xOTAzMDcxODAyMDhaMBYxFDASBgNVBAMMC1AyU1Jvb3RDZXJ0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtLqlzPJpNAm/SW436wBDDm10EO9Vm+o+HuGWdbtHHIekpU8Q1/zQEcibf8TWwV2P3LHnPJ9gMHDbltQBAZclBxwBZSSlLVQxGEXEI8x2jW+WNRpLo7fFBSCQvlvadxfEcsvcPR6PooJ6N4ioq+SD9mokf3nr2qwd3Ax2dguaBczZoP9oWOqfASfyihI2EbUO+67NZNL76ELef5+EhCG38AzInpewyIVsOCecB8SSbaUOnxvE/jfGlHjfwukmL0qCOj7cXCO1o/14rtNjlM1xiB4qJtBa10dUpMzkxJCPf3cQ s1+6XmXRw97mPQ/XJGdhbniN9Gc0/A3yb78afsyTWQIDAQABozEwLzAOBgNVHQ8BAf8EBAMCAgQwHQYDVR0OBBYEFN+q56AjARjzgtmZAtfyUW5wvs0QMA0GCSqGSIb3DQEBCwUAA4IBAQAJCzS0kwkA3d24+i8GVVX3ej7ZXfoJN22s6jY16jHH1GRyUNuJoCCnLFnN/09FsW6UpA/JE69lPaQf8S/4uecO/FJ3cbO2DNmpdDAZkDP71a6+IANbe/Jk2/6lhKM4cxpPa6fEhTRcZuXtMzW2y3AfRw3O+R2mpf1FiSbcp1yQmBGg5sgrrdMYvanLCScgnYDczIfKQaAoU3eOtx4Q3Tv9sWZp4pupcwgNg0stBkKykBJsa3WlrxQECLA0iLAKoa+l6lI5M0eG8REfBZTJ8wd+qfbbeMu4diuEdmETHcA3CqGmY1uVhuCkVFGYN/fPtWwEkOETI2R3PS/az/ACnyM0"
+              }
+            }
+          ],
+          "vpnClientRevokedCertificates": []
+        },
+        "bgpSettings": {
+          "asn": 65515,
+          "bgpPeeringAddress": "172.16.254.14",
+          "peerWeight": 0
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('VNet1GWIPName'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VNetName'), parameters('GatewaySubnetName'))]"
+      ]
+    },
+    {
+      "comments": "Subnet FrontEnd",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "[concat(parameters('VNetName'), '/', parameters('FrontEndSubnetName'))]",
+      "apiVersion": "2017-10-01",
+      "scale": null,
+      "properties": {
+        "provisioningState": "Succeeded",
+        "addressPrefix": "[parameters('FrontEndSubnetPrefix')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('VNetName'))]"
+      ]
+    },
+    {
+      "comments": "Subnet BackEnd",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "[concat(parameters('VNetName'), '/', parameters('BackEndSubnetName'))]",
+      "apiVersion": "2017-10-01",
+      "scale": null,
+      "properties": {
+        "provisioningState": "Succeeded",
+        "addressPrefix": "[parameters('BackEndSubnetPrefix')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('VNetName'))]"
+      ]
+    },
+    {
+      "comments": "Subnet Gateway resource",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "[concat(parameters('VNetName'), '/', parameters('GatewaySubnetName'))]",
+      "apiVersion": "2017-10-01",
+      "scale": null,
+      "properties": {
+        "provisioningState": "Succeeded",
+        "addressPrefix": "[parameters('GatewaySubnetPrefix')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('VNetName'))]"
+      ]
+    }
+  ],
+  "outputs": {}
+}
+   

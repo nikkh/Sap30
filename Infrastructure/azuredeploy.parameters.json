@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "VNetName": {
+      "value": "VNet1"
+    },
+    "VNetPrefix": {
+      "value": "172.16.0.0/16"
+    },
+    "FrontEndSubnetName": {
+      "value": "FrontEnd"
+    },
+    "FrontEndSubnetPrefix": {
+      "value": "172.16.50.0/23"
+    },
+    "BackEndSubnetName": {
+      "value": "BackEnd"
+    },
+    "BackEndSubNetPrefix": {
+      "value": "172.16.100.0/23"
+    },
+    "GatewaySubnetName": {
+      "value": "GatewaySubnet"
+    },
+    "GatewaySubnetPrefix": {
+      "value": "172.16.254.0/28"
+    },
+    "VNet1GWName": {
+      "value": "VNet1GW"
+    },
+    "VNet1GWIPName": {
+      "value": "VNet1GWIP"
+    },
+    "VNet1GWpublicIPAddress": {
+      "value": "51.145.40.77"
+    },
+    "VPNClientPoolIPPrefix": {
+      "value": "172.17.0.0/24"
+    }
+  }
+}
